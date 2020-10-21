@@ -1,4 +1,4 @@
-\chapter{Example: $ B := L B $ --  \large Team: Devangi Parikh}
+\chapter{Example: $ C := A B ^ T + B A ^ T + C $ --  \large Team: Devangi Parikh}
 
 
 
@@ -6,33 +6,28 @@
 
 Consider the operation
 \[
-B := L B 
+C := A B ^ T + B A ^ T + C
 \]
-where $ L $ is a $ m \times m $ lower triangular matrix and $ B $ is a $ m \times n $ matrix.
-This is a special case of triangular 
-matrix-matrix multiplication, 
-with the {\sc l}ower triangular matrix on the {\sc l}eft, 
-and the triangular matrix is {\sc n}ot transposed.
+where $ C $ is a $ m \times m $ lower triangular matrix and $ A $ and $ B $ is a $ m \times m $ matrix.
+This is what we call a symmetric rank-2k update
+with the {\sc l}ower triangular matrix on the {\sc r}ight.
 We will refer to this operation
-as {\sc Trmm\_llnn} where the {\sc llnn} stands for
-\underline{l}eft
-\underline{l}ower
-\underline{n}o-transpose
-\underline{n}onunit diagonal.
-The {\sc n}onunit diagonal means we will use the entries of the matrix that are stored on the diagonal.  In some other cases, the entries on the diagonal may implicitly be taked to all equal one ({\sc u}nit).
+as {\sc Syr2k\_ln} where the {\sc ln} stands for
+\underline{l}ower triangular
+\underline{n}o-transpose.
 
 \section{Precondition and postcondition}
 
 In the precondition 
 \[
-B = \widehat B
+C = \widehat C
 \]
-$ \widehat B $ denotes the original contents of $ B $.
+$ \widehat C $ denotes the original contents of $ C $.
 This allows us to express the state upon completion, the postcondition, as
 \[
-B = L \widehat B.
+C = C := A B ^ T + B A ^ T + \widehat C.
 \]
-It is implicitly assumed that $ L $ is nonunit lower triangular.
+It is implicitly assumed that $ C $ is nonunit lower triangular.
 \section{Partitioned Matrix Expressions and loop invariants}
 
 There are two PMEs for this operation.
