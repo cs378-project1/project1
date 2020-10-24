@@ -1,4 +1,4 @@
-\chapter{Example: $ C := A B ^ T + B A ^ T + C $ --  \large Team: Devangi Parikh}
+\chapter{Example: $ C := A B ^ T + B A ^ T + C $ --  \large Team: --}
 
 
 
@@ -25,7 +25,7 @@ C = \widehat C
 $ \widehat C $ denotes the original contents of $ C $.
 This allows us to express the state upon completion, the postcondition, as
 \[
-C = C := A B ^ T + B A ^ T + \widehat C.
+C := A B ^ T + B A ^ T + \widehat C.
 \]
 It is implicitly assumed that $ C $ is nonunit lower triangular.
 \section{Partitioned Matrix Expressions and loop invariants}
@@ -34,138 +34,197 @@ There are two PMEs for this operation.
 
 \subsection{PME 1}
 
-To derive the second PME, partition
+To derive the first PME, partition
 \[
-L \rightarrow
+C \rightarrow
 \left(\begin{array}{c I c}
-L_{TL} & 0 \\ \whline
-L_{BL} & L_{BR}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
 \end{array}\right)
 ,
-	\quad \mbox{and} \quad
-B \rightarrow 
+	\quad  \quad
+A \rightarrow 
 \left(\begin{array}{c}
-B_T \\ \whline
-B_B
-\end{array}\right).
+A_T \\ \whline
+A_B
+\end{array}\right)
+,
+\quad \mbox{and} \quad
+B \rightarrow 
+\left(\begin{array}{c I c}
+B_T^T & B_B^T
+\end{array}\right)
 \]
 Substituting these into the postcondition
 yields
 \[
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
+\end{array}\right)
+=
+\left(\begin{array}{c}
+A_T \\ \whline
+A_B
+\end{array}\right)
+\left(\begin{array}{c I c}
+B_T^T & B_B^T
+\end{array}\right)
++
 \left(\begin{array}{c}
 B_T \\ \whline
 B_B
 \end{array}\right)
-=
 \left(\begin{array}{c I c}
-L_{TL} & 0 \\ \whline
-L_{BL} & L_{BR}
+A_T^T & A_B^T
 \end{array}\right)
-\left(\begin{array}{c}
-\widehat B_T \\ \whline
-\widehat B_B
++
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
 \end{array}\right)
 \]
 or, equivalently,
 \[
-\left(\begin{array}{c}
-B_T \\ \whline
-B_B
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
 \end{array}\right)
 =
-\left(\begin{array}{c}
-L_{TL} \widehat B_T \\ \whline
-L_{BL} \widehat B_T + L_{BR} \widehat B_B
-\end{array}\right),
+\left(\begin{array}{c I c}
+A_T B_T^T + B_T A_T^T + C_{TL} & * \\ \whline
+A_B B_T^T + B_B A_T^T + C_{BL} & A_B B_B^T + B_B A_B^T + C_{BR}
+\end{array}\right)
 \]
 which we refer to as the first PME for this operations.
 
-From this, we can choose two loop invariants:
+From this, we can choose five loop invariants:
 \begin{description}
 	\item
 	{\bf Invariant 1:}
 	$
-	\left(\begin{array}{c}
-	B_T \\ \whline
-	B_B
-	\end{array}\right)
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
 	 = 
-	 \left(\begin{array}{c}
-	 \widehat B_T \\ \whline
-	 L_{BR} \widehat B_B
-	 \end{array}\right)
+	 \left(\begin{array}{c I c}
+		A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+		\widehat C_{BL} & \widehat C_{BR}
+		\end{array}\right)
 	$. \\
-	(The top part has been left alone and the bottom part has been partially computed).
+	(The top left part has been left alone and the bottom parts have been completely computed).
 	\item
 	{\bf Invariant 2:}
 	$
-	\left(\begin{array}{c}
-	B_T \\ \whline
-	B_B
-	\end{array}\right) = 
-	\left(\begin{array}{c}
-	\widehat B_T \\ \whline
-	L_{BL} \widehat B_T + L_{BR} \widehat B_B
-	\end{array}\right)
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
+		 = 
+		 \left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			\widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+			\end{array}\right)
 	$. \\
-	(The top part has been left alone and the bottom part has been completely computed).
+	(The bottom right part has been left alone and the left parts have been completely computed).
+	\item
+	{\bf Invariant 3:}
+	$
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
+	 = 
+	 \left(\begin{array}{c I c}
+		A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+		A_B B_T^T + \widehat C_{BL} & \widehat C_{BR}
+		\end{array}\right)
+	$. \\
+	(The top left part has been left alone, the bottom left part has been partially computed, and the bottom right part has been completely computed).
+	\item
+	{\bf Invariant 4:}
+	$
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right) = 
+		\left(\begin{array}{c I c}
+			A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+			B_B A_T^T + \widehat C_{BL} & \widehat C_{BR}
+			\end{array}\right)
+	$. \\
+	(The top left part has been left alone, the bottom right part has been partially computed, and the bottom left part has been completely computed).
+	\item
+	{\bf Invariant 5:}
+	$
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right) = 
+		\left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			A_B B_T^T + \widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+			\end{array}\right)
+	$. \\
+	(The bottom right part has been left alone, the bottom left part has been partially computed, and the top left part has been completely computed).
 \end{description}
 
 \subsection{PME 2}
 
 To derive the second PME, partition
 \[
-B \rightarrow \left(\begin{array}{c I c}
-B_L & B_R 
-\end{array}\right)
+	A \rightarrow 
+	\left(\begin{array}{c I c}
+	A_L & A_R
+	\end{array}\right)
+	,
+	\quad \mbox{and} \quad
+	B \rightarrow 
+	\left(\begin{array}{c I c}
+	B_L & B_R
+	\end{array}\right)
 \]
-and do not partition $ L $.
+and do not partition $ C $.
 Substituting these into the postcondition
 yields
 \[
-\left(\begin{array}{c I c}
-B_L & B_R 
-\end{array}\right)
+C
 =
-L 
 \left(\begin{array}{c I c}
-\widehat B_L & \widehat B_R 
+A_L & A_R
 \end{array}\right)
+\left(\begin{array}{c}
+B_L^T \\ \whline 
+B_R^T
+\end{array}\right)
++
+\left(\begin{array}{c I c}
+B_L & B_R
+\end{array}\right)
+\left(\begin{array}{c}
+A_L^T \\ \whline 
+A_R^T
+\end{array}\right)
++
+C
 \]
 or, equivalently,
 \[
-\left(\begin{array}{c I c}
-B_L & B_R 
-\end{array}\right)
+C
 =
-\left(\begin{array}{c I c}
-L \widehat B_L & L \widehat B_R 
-\end{array}\right),
+A_L B_L ^ T + A_R B_R ^ T + B_L A_L ^ T + B_R A_R ^ T + \widehat C
 \]
 which we refer to as the second PME.
 
-From this, we can choose two more loop invariants:
+From this, we can choose one more loop invariant:
 \begin{description}
 	\item
-	{\bf Invariant 3:}
+	{\bf Invariant 6:}
 	$
-	\left(\begin{array}{c I c}
-	B_L & B_R 
-	\end{array}\right) =
-	\left(\begin{array}{c I c}
-	L \widehat B_L & \widehat B_R 
-	\end{array}\right)$.\\
-	 (The left part has been completely finished and the right part has been left untouched).
-	\item
-	{\bf Invariant 4:}
-	$
-	\left(\begin{array}{c I c}
-	B_L & B_R 
-	\end{array}\right) =
-	\left(\begin{array}{c I c}
-	\widehat B_L & L \widehat B_R 
-	\end{array}\right)$. \\
-	(The left part has been completely finished and the right part has been left untouched).
+	C =
+	A_L B_L ^ T + B_L A_L ^ T + \widehat C$.\\
+	 (The right part has been completely finished).
 \end{description}
 
 \subsection{Notes}
