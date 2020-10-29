@@ -42,81 +42,102 @@
 
 % Define the operation to be computed
 
-\renewcommand{\operation}{ B = L B }
+\renewcommand{\operation}{ C := A B ^ T + B A ^ T + C }
 
 \renewcommand{\routinename}{\operation}
 
 % Step 1a: Precondition 
 
 \renewcommand{\precondition}{
-	B = \widehat{B}
+	C = \widehat C
 }
 
 % Step 1b: Postcondition 
 
 \renewcommand{\postcondition}{ 
-	B = L \widehat B
+	C := A B ^ T + B A ^ T + \widehat C.
 }
 
 % Step 2: Invariant 
 % Note: Right-hand side of equalities must be updated appropriately
 
 \renewcommand{\invariant}{
-	\left(\begin{array}{c}
-		B_T \\ \whline
-		B_B 
-	\end{array}\right)  = 
-	\left(\begin{array}{c}
-		\widehat B_T \\ \whline 
-		L_{BL} \widehat B_T +	L_{BR} \widehat B_B 
-	\end{array}\right)
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
+		 = 
+		 \left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			\widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+			\end{array}\right)
 }
 
 % Step 3: Loop-guard 
 
 \renewcommand{\guard}{
-	m( L_{BR} ) < m( L )
+	m( C_{BR} ) < m( C )
 }
 
 % Step 4: Initialize 
 
 \renewcommand{\partitionings}{
 	$
-	L \rightarrow
-	\left(\begin{array}{c I c} 
-	L_{TL} & L_{TR} \\ \whline
-	L_{BL} & L_{BR} 
-	\end{array}\right) 
+	C \rightarrow
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
+\end{array}\right)
 	$
 	,
 	$
-	B \rightarrow
-	\left(\begin{array}{c}
-	B_{T} \\ \whline 
-	B_{B}
-	\end{array}\right)
+	A \rightarrow 
+\left(\begin{array}{c}
+A_T \\ \whline
+A_B
+\end{array}\right)
+	$
+	,
+	$
+	B \rightarrow 
+\left(\begin{array}{c}
+B_T \\ \whline
+B_B
+\end{array}\right)
 	$
 }
 
 \renewcommand{\partitionsizes}{
-	$ L_{BR} $ is $ 0 \times 0 $,
-	$ B_B $ has $ 0 $ rows
+	$ C_{BR} $ is $ 0 \times 0 $,
+	$ A_B $ and $ B_B $ have $ 0 $ rows
 }
 
 % Step 5a: Repartition the operands 
 
 \renewcommand{\repartitionings}{
 	$  \left(\begin{array}{c I c}
-	L_{TL} & L_{TR} \\ \whline 
-	L_{BL} & L_{BR}
-	\end{array}\right) 
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
 	\rightarrow
 	\left(\begin{array}{c c I c}
-	L_{00} & l_{01} & L_{02} \\  
-	l_{10}^T & \lambda_{11} & l_{12}^T \\ \whline 
-	L_{20} & l_{21} & L_{22}
+	C_{00} & * & * \\  
+	c_{10}^T & \lambda_{11} & * \\ \whline 
+	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	$
+	,
+	$  \left(\begin{array}{c}
+		A_T \\ \whline
+		A_B 
+		\end{array}\right) 
+		\rightarrow
+		\left(\begin{array}{c}
+		A_0 \\  
+		a_1^T \\ \whline 
+		A_2
+		\end{array}\right)
+		$
 	,
 	$  \left(\begin{array}{c}
 	B_T \\ \whline
@@ -133,22 +154,34 @@
 
 \renewcommand{\repartitionsizes}{
 	$ \lambda_{11} $ is $ 1 \times 1 $,
-	$ b_1 $ has $ 1 $ row}
+	$ a_1 $ and $ b_1 $ have $ 1 $ row}
 
 % Step 5b: Move the double lines 
 
 \renewcommand{\moveboundaries}{
 	$  \left(\begin{array}{c I c}
-	L_{TL} & L_{TR} \\ \whline 
-	L_{BL} & L_{BR}
-	\end{array}\right) 
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
 	\leftarrow
 	\left(\begin{array}{c I c c}
-	L_{00} & l_{01} & L_{02} \\ \whline 
-	l_{10}^T & \lambda_{11} & l_{12}^T \\  
-	L_{20} & l_{21} & L_{22}
+	C_{00} & * & * \\ \whline 
+	c_{10}^T & \lambda_{11} & * \\  
+	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	$
+	,
+	$  \left(\begin{array}{c}
+		A_T \\ \whline
+		A_B 
+		\end{array}\right) 
+		\leftarrow
+		\left(\begin{array}{c}
+		A_0 \\ \whline 
+		a_1^T \\  
+		A_2
+		\end{array}\right) 
+		$
 	,
 	$  \left(\begin{array}{c}
 	B_T \\ \whline
@@ -167,16 +200,16 @@
 % Note: The below needs editing consistent with loop-invariant!!!
 
 \renewcommand{\beforeupdate}{$ 
-	\left(\begin{array}{c}
-	B_0 \\ 
-	b_1^T \\  
-	B_2
+	\left(\begin{array}{c c c}
+	C_{00} & * & * \\  
+	c_{10}^T & \lambda_{11} & * \\
+	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	=
-	\left(\begin{array}{c}
-	\widehat B_0 \\ 
-	\widehat b_1^T \\  
-	L_{20}\widehat B_0 + l_{21}\widehat b_1^T +   L_{22} \widehat B_2
+	\left(\begin{array}{c c c}
+	C_{00} & * & * \\  
+	c_{10}^T & \lambda_{11} & * \\
+	C_{20} & c_{21} & A_2 B_2^T + B_2 A_2^T + \widehat C_{22}
 	\end{array}\right) 
 $}
 
@@ -185,17 +218,17 @@ $}
 % Note: The below needs editing consistent with loop-invariant!!!
 
 \renewcommand{\afterupdate}{$ 
-		\left(\begin{array}{c}
-		B_0 \\ 
-		b_1^T \\  
-		B_2
-		\end{array}\right) 
-		=
-		\left(\begin{array}{c}
-		\widehat B_0 \\
-		l_{10}^T \widehat B_0 + \lambda_{11} \widehat b_1^T \\  
-		L_{20}B_0 + l_{21} b_1^T + L_{22} \widehat B_2
-		\end{array}\right) 
+	\left(\begin{array}{c c c}
+	C_{00} & * & * \\  
+	c_{10}^T & \lambda_{11} & * \\
+	C_{20} & c_{21} & C_{22}
+	\end{array}\right) 
+	=
+	\left(\begin{array}{c c c}
+	C_{00} & * & * \\  
+	c_{10}^T & a_1^T b_1 + b_1^T a_1 + \widehat \lambda_{11} & * \\
+	C_{20} & A_2 b_1 + B_2 a_1 + \widehat c_{21} & A_2 B_2^T + B_2 A_2^T + \widehat C_{22}
+	\end{array}\right) 
 	$}
 
 
@@ -206,7 +239,8 @@ $}
 \renewcommand{\update}{
 	$
 	\begin{array}{l}          % do not delete this line 
-	b_1^T := l_{10}^T  B_0 + \lambda_{11} b_1^T 
+	\lambda_{11} := a_1^T b_1 + b_1^T a_1 + \lambda_{11} \\
+	c_{21}  := A_2 b_1 + B_2 a_1 + c_{21} 
 	\end{array}               % do not delete this line 
 	$
 }
