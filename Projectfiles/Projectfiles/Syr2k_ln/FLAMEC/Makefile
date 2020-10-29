@@ -1,13 +1,12 @@
-HOME       := /Users/dnp
 #BLAS_LIB   := $(HOME)/lib/libopenblas_sandybridgep-r0.2.20.a
 #FLAME_LIB  := $(HOME)/lib/libflame-x86_64-5.1.0-36.a
 #FLAME_INC  := $(HOME)/include
 BLAS_LIB   := $(HOME)/blis/lib/libblis.a
-FLAME_LIB  := $(HOME)/libflame/lib/libflame.a
+FLAME_LIB  := $(HOME)/libflame/lib/x86_64-unknown-linux-gnu/libflame.a
 FLAME_INC  := $(HOME)/libflame/include
 
 # indicate where the object files are to be created
-CC         := gcc-8
+CC         := gcc
 LINKER     := $(CC)
 CFLAGS     := -O3 -Wall -I$(FLAME_INC) -I$(CBLAS_INC) -m64 -msse3 
 FFLAGS     := $(CFLAGS) 
@@ -22,11 +21,13 @@ LDFLAGS    := -m64 -lm -fopenmp
 
 # indicate where the FLAME include files reside
 
-# add files in which your implementations are coded
-TEST_OBJS  := driver.o trmm_llnn_unb_var1.o 
+# c files
+C_FILES=$(wildcard *.c)
+C_O_FILES=$(subst .c,.o,$(C_FILES))
 
-# $%.o: %.c
-#	$(CC) $(CFLAGS) -c $< -o $@
+# add files in which your implementations are coded
+TEST_OBJS  := $(C_O_FILES)
+
 # $%.o: %.f
 #	$(FC) $(FFLAGS) -c $< -o $@
 
@@ -35,6 +36,9 @@ driver.x: $(TEST_OBJS)
 
 test:   driver.x
 	echo "$(NREPEATS) $(NFIRST) $(NLAST) $(NINC)" | ./driver.x > output.m
+
+$(C_O_FILES) : %.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f *.o *~ core *.x output.m

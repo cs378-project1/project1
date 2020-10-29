@@ -1,13 +1,13 @@
-HOME       := /Users/dnp
+HOME       := /home/dyreatic
 #BLAS_LIB   := $(HOME)/lib/libopenblas_sandybridgep-r0.2.20.a
 #FLAME_LIB  := $(HOME)/lib/libflame-x86_64-5.1.0-36.a
 #FLAME_INC  := $(HOME)/include
 BLAS_LIB   := $(HOME)/blis/lib/libblis.a
-FLAME_LIB  := $(HOME)/libflame/lib/libflame.a
+FLAME_LIB  := $(HOME)/libflame/lib/x86_64-unknown-linux-gnu/libflame.a
 FLAME_INC  := $(HOME)/libflame/include
 
 # indicate where the object files are to be created
-CC         := gcc-8
+CC         := gcc
 LINKER     := $(CC)
 CFLAGS     := -O3 -Wall -I$(FLAME_INC) -I$(CBLAS_INC) -m64 -msse3 
 FFLAGS     := $(CFLAGS) 

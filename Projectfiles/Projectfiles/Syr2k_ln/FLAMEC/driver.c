@@ -10,6 +10,7 @@
 #define FALSE 0
 
 void trmm_llnn_unb_var1( FLA_Obj, FLA_Obj );
+int Syr2k_unb_var2( FLA_Obj A, FLA_Obj B, FLA_Obj C );
 
 int main(int argc, char *argv[])
 {
@@ -20,10 +21,9 @@ int main(int argc, char *argv[])
     diff;
 
   dtime_best = 0.0;
-
-  FLA_Obj
-    Lobj, Bobj, Bold, Bref;
   
+  FLA_Obj Aobj, Bobj, Cobj, Cold, Cref;
+
   /* Initialize FLAME. */
   FLA_Init( );
 
@@ -43,20 +43,22 @@ int main(int argc, char *argv[])
   for ( n=nfirst; n<= nlast; n+=ninc ){
 
     /* Allocate space for the matrices and vectors */
-    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Lobj );
+    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Aobj );
     FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Bobj );
-    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Bold );
-    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Bref );
+    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Cobj );
+    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Cold );
+    FLA_Obj_create( FLA_DOUBLE, n, n, 1, n, &Cref );
 
     /* Generate random matrix A, and vectors x, and y */
-    FLA_Random_matrix( Lobj );
-    FLA_Random_matrix( Bold );
+    FLA_Random_matrix( Aobj );
+    FLA_Random_matrix( Bobj );
+    FLA_Random_symm_matrix( FLA_LOWER_TRIANGULAR, Cold );
 
 
 
     for ( irep=0; irep<nrepeats; irep++ ) {
     /* Time reference implementation (from libflame) */
-      FLA_Copy( Bold, Bref );
+      FLA_Copy( Cold, Cref );
     
       /* start clock */
       dtime = FLA_Clock();
@@ -65,8 +67,8 @@ int main(int argc, char *argv[])
 	 lower triangular part of array L, by calling FLA_Trmm.  The
 	 result ends up in Bref, which we will consider to be the
 	 correct result. */
-      FLA_Trmm( FLA_LEFT, FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_NONUNIT_DIAG, FLA_ONE, Lobj, Bref );
-      
+      FLA_Syr2k(FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_ONE, Aobj, Bobj, FLA_ONE, Cref);
+
       /* stop clock */
       dtime = FLA_Clock() - dtime;
     
@@ -83,14 +85,14 @@ int main(int argc, char *argv[])
 
     for ( irep=0; irep<nrepeats; irep++ ){
       /* Copy vector yold to y */
-      FLA_Copy( Bold, Bobj );
+      FLA_Copy( Cold, Cobj );
     
       /* start clock */
       dtime = FLA_Clock();
  
       /* Comment out the below call and call your routine instead */
       //      FLA_Trmm( FLA_LEFT, FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_NONUNIT_DIAG, FLA_ONE, Lobj, Bobj );
-      trmm_llnn_unb_var1( Lobj, Bobj );
+      Syr2k_unb_var2( Aobj, Bobj, Cobj );
 
       /* stop clock */
       dtime = FLA_Clock() - dtime;
@@ -101,17 +103,18 @@ int main(int argc, char *argv[])
 	dtime_best = ( dtime < dtime_best ? dtime : dtime_best );
     }
 
-    diff = FLA_Max_elemwise_diff( Bobj, Bref );
+    diff = FLA_Max_elemwise_diff( Cobj, Cref );
   
     printf( "data_unb_var1( %d, 1:3 ) = [ %d %le %le];\n", i, n,
 	    dtime_best, diff  );
 
     fflush( stdout );
 
-    FLA_Obj_free( &Lobj );
+    FLA_Obj_free( &Aobj );
     FLA_Obj_free( &Bobj );
-    FLA_Obj_free( &Bref );
-    FLA_Obj_free( &Bold );
+    FLA_Obj_free( &Cobj );
+    FLA_Obj_free( &Cref );
+    FLA_Obj_free( &Cold );
 
     i++;
   }
