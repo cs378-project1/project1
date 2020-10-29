@@ -225,7 +225,7 @@ $
 	\left(\begin{array}{c c c}
 	A_0B_0^T + B_0A_0^T + \widehat C_{00} & * & \widehat * \\  
 	a_1B_0^T + b_1^TA_0^T + \widehat  c_{10}^T & a_1^T(b_1^T)^T + b_1^T(a_1^T)^T + \widehat \gamma_{11} & * \\ 
-	A_2(b_1^T)^T + A_2B_0^T  + \widehat C_{20} & A_2B_0^T + a_1^TB_0^T + \widehat c_{21} & \widehat C_{22}
+	A_2B_0^T  + \widehat C_{20} & A_2(b_1^T)^T+ \widehat c_{21} & \widehat C_{22}
 	\end{array}\right)
  $}
 
@@ -239,8 +239,7 @@ $
   \begin{array}{l}          % do not delete this line 
     \mbox{$\gamma_{11} = a_1^T(b_1^T)^T + b_1^T(a_1^T)^T + \gamma_{11}$} \\
     \mbox{$c_{10}^T = b_1^TA_0^T + c_{10}^T$} \\ % replace \mbox{...} with update line but leave \\  
-    \mbox{$C_{20} = A_2(b_1^T)^T + C_{20}^T$} \\    % replace \mbox{...} with update line 
-    \mbox{$c_{21} = A_2B_0^T + a_1^TB_0^T + C_{20}^T$}
+    \mbox{$c_{21} = A_2(b_1^T)^T+ c_{21}$}
   \end{array}               % do not delete this line 
 $
 }
