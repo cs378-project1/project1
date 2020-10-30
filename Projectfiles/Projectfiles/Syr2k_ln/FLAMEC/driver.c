@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 
     diff = FLA_Max_elemwise_diff( Cobj, Cref );
   
-    printf( "data_unb_var1( %d, 1:3 ) = [ %d %le %le];\n", i, n,
+    printf( "data_unb_var2( %d, 1:3 ) = [ %d %le %le];\n", i, n,
 	    dtime_best, diff  );
 
     fflush( stdout );

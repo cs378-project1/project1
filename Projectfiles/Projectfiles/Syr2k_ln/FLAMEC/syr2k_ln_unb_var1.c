@@ -43,9 +43,15 @@ int Syr2k_unb_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C )
 
     /*------------------------------------------------------------*/
 
-    /*                       update line 1                        */
-    /*                             :                              */
-    /*                       update line n                        */
+    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
+               FLA_ONE, a1t, b1t, FLA_ONE, gamma11 );
+    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
+               FLA_ONE, b1t, a1t, FLA_ONE, gamma11 );
+
+    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
+               FLA_ONE, a1, B0, FLA_ONE, c10t );
+    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
+               FLA_ONE, b1t, A0, FLA_ONE, c10t );
 
     /*------------------------------------------------------------*/
 
