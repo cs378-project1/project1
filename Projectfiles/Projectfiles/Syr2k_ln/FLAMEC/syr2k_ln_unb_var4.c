@@ -1,6 +1,15 @@
+/* Copyright 2020 The University of Texas at Austin
+ 
+   For licensing information see
+                  http://www.cs.utexas.edu/users/flame/license.html
+
+   Programmed by: Daimu Iwata
+                  di2937@utexas.edu
+                                                                     */
+
 #include "FLAME.h"
 
-int Syr2k_unb_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C )
+int syr2k_ln_unb_var4( FLA_Obj A, FLA_Obj B, FLA_Obj C )
 {
   FLA_Obj AT,              A0,
           AB,              a1t,
@@ -10,14 +19,14 @@ int Syr2k_unb_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C )
           BB,              b1t,
                            B2;
 
-  FLA_Obj CTL,   CTR,      C00,  c01,     C02, 
+  FLA_Obj CTL,   CTR,      C00,  c01,     C02,
           CBL,   CBR,      c10t, gamma11, c12t,
                            C20,  c21,     C22;
 
-  FLA_Part_2x1( A,    &AT, 
+  FLA_Part_2x1( A,    &AT,
                       &AB,            0, FLA_TOP );
 
-  FLA_Part_2x1( B,    &BT, 
+  FLA_Part_2x1( B,    &BT,
                       &BB,            0, FLA_TOP );
 
   FLA_Part_2x2( C,    &CTL, &CTR,
@@ -25,14 +34,14 @@ int Syr2k_unb_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C )
 
   while ( FLA_Obj_length( CTL ) < FLA_Obj_length( C ) ){
 
-    FLA_Repart_2x1_to_3x1( AT,                &A0, 
+    FLA_Repart_2x1_to_3x1( AT,                &A0,
                         /* ** */            /* *** */
-                                              &a1t, 
+                                              &a1t,
                            AB,                &A2,        1, FLA_BOTTOM );
 
-    FLA_Repart_2x1_to_3x1( BT,                &B0, 
+    FLA_Repart_2x1_to_3x1( BT,                &B0,
                         /* ** */            /* *** */
-                                              &b1t, 
+                                              &b1t,
                            BB,                &B2,        1, FLA_BOTTOM );
 
     FLA_Repart_2x2_to_3x3( CTL, /**/ CTR,       &C00,  /**/ &c01,     &C02,
@@ -43,25 +52,25 @@ int Syr2k_unb_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C )
 
     /*------------------------------------------------------------*/
 
-    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
-               FLA_ONE, a1t, b1t, FLA_ONE, gamma11 );
-    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
-               FLA_ONE, b1t, a1t, FLA_ONE, gamma11 );
+    /* gamma11 := a1t * b1t' + b1t * a1t' + gamma11 */
+    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, a1t, b1t, FLA_ONE, gamma11 );
+    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, b1t, a1t, FLA_ONE, gamma11 );
+      
+    /* c10t := a1t * B0' + c10t */
+    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, a1t, B0, FLA_ONE, c10t );
 
-    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
-               FLA_ONE, a1, B0, FLA_ONE, c10t );
-    FLA_Syr2k( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
-               FLA_ONE, b1t, A0, FLA_ONE, c10t );
+    /* c21 := B2 * a1t' + c21 */
+    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, B2, a1t, FLA_ONE, c21 );
 
     /*------------------------------------------------------------*/
 
-    FLA_Cont_with_3x1_to_2x1( &AT,                A0, 
-                                                  a1t, 
+    FLA_Cont_with_3x1_to_2x1( &AT,                A0,
+                                                  a1t,
                             /* ** */           /* *** */
                               &AB,                A2,     FLA_TOP );
 
-    FLA_Cont_with_3x1_to_2x1( &BT,                B0, 
-                                                  b1t, 
+    FLA_Cont_with_3x1_to_2x1( &BT,                B0,
+                                                  b1t,
                             /* ** */           /* *** */
                               &BB,                B2,     FLA_TOP );
 
