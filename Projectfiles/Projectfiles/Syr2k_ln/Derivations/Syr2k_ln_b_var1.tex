@@ -119,7 +119,7 @@
   \rightarrow
   \left(\begin{array}{c}
      A_0 \\ \whline 
-     A_1^T \\  
+     A_1 \\  
      A_2
   \end{array}\right)
   $
@@ -131,7 +131,7 @@
   \rightarrow
   \left(\begin{array}{c}
      B_0 \\ \whline 
-     B_1^T \\  
+     B_1 \\  
      B_2
   \end{array}\right)
   $
@@ -143,7 +143,7 @@
   \rightarrow
   \left(\begin{array}{c I c c}
      C_{00} & * & * \\ \whline 
-     C_{10}^T & C_{11} & * \\  
+     C_{10} & C_{11} & * \\  
      C_{20} & C_{21} & C_{22}
   \end{array}\right) 
   $
@@ -164,7 +164,7 @@ $  \left(\begin{array}{c}
   \leftarrow
   \left(\begin{array}{c}
      A_0 \\  
-     A_1^T \\ \whline 
+     A_1 \\ \whline 
      A_2
   \end{array}\right) 
   $
@@ -176,7 +176,7 @@ $  \left(\begin{array}{c}
   \leftarrow
   \left(\begin{array}{c}
      B_0 \\  
-     B_1^T \\ \whline 
+     B_1 \\ \whline 
      B_2
   \end{array}\right) 
   $
@@ -188,7 +188,7 @@ $  \left(\begin{array}{c I c}
   \leftarrow
   \left(\begin{array}{c c I c}
      C_{00} & * & * \\  
-     C_{10}^T & C_{11} & * \\ \whline 
+     C_{10} & C_{11} & * \\ \whline 
      C_{20} & C_{21} & C_{22}
   \end{array}\right) 
   $
@@ -200,12 +200,12 @@ $  \left(\begin{array}{c I c}
 \renewcommand{\beforeupdate}{$
 	\left(\begin{array}{c c c}
 	C_{00} & * & * \\  
-	C_{10}^T & C_{11} & * \\ 
+	C_{10} & C_{11} & * \\ 
 	C_{20} & C_{21} & C_{22}
 	\end{array}\right) =
 	\left(\begin{array}{c c c}
 	A_0B_0^T + B_0A_0^T + \widehat C_{00} & * & * \\  
-	\widehat C_{10}^T & \widehat C_{11} & * \\ 
+	\widehat C_{10} & \widehat C_{11} & * \\ 
 	\widehat C_{20} & \widehat C_{21} & \widehat C_{22}
 	\end{array}\right)
 	 $}
@@ -218,12 +218,12 @@ $  \left(\begin{array}{c I c}
 	$
 	\left(\begin{array}{c c c}
 	C_{00} & * & *\\  
-	C_{10}^T & C_{11} & * \\ 
+	C_{10} & C_{11} & * \\ 
 	C_{20} & C_{21} & C_{22}
 	\end{array}\right) =
 	\left(\begin{array}{c c c}
 	A_0B_0^T + B_0A_0^T + \widehat C_{00} & * & * \\  
-	A_1B_0^T + B_1^TA_0^T + \widehat  C_{10}^T & A_1^T(B_1^T)^T + B_1^T(A_1^T)^T + \widehat C_{11} & * \\ 
+	A_1B_0^T + B_1A_0^T + \widehat  C_{10} & A_1B_1^T + B_1A_1^T + \widehat C_{11} & * \\ 
 	\widehat C_{20} & \widehat C_{21} & \widehat C_{22}
 	\end{array}\right)
  $}
@@ -236,8 +236,8 @@ $  \left(\begin{array}{c I c}
 \renewcommand{\update}{
 $
   \begin{array}{l}          % do not delete this line 
-    \mbox{$C_{11} := A_1^T(B_1^T)^T + B_1^T(A_1^T)^T + C_{11}$} \\
-    \mbox{$C_{10}^T :=  A_1B_0^T + B_1^TA_0^T + C_{10}^T$} % replace \mbox{...} with update line but leave \\
+    \mbox{$C_{11} := A_1B_1^T + B_1A_1^T + C_{11}$} \\
+    \mbox{$C_{10} :=  A_1B_0^T + B_1A_0^T + C_{10}$} % replace \mbox{...} with update line but leave \\
   \end{array}               % do not delete this line 
 $
 }
