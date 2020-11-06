@@ -56,10 +56,7 @@ int syr2k_ln_blk_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C, int nb_alg )
 
     /*------------------------------------------------------------*/
       /* C11 := A1B1^T + B1A1^T + C11 */
-      FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, 
-               FLA_ONE, A1, B1, FLA_ONE, C11 );
-      FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, 
-               FLA_ONE, B1, A1, FLA_ONE, C11 );
+      FLA_Syr2k(FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_ONE, A1, B1, FLA_ONE, C11);
 
       /*C10 := A1B0^T + B1A0^T + C10 */
       FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, 

@@ -8,6 +8,7 @@
 
 #define TRUE 1
 #define FALSE 0
+#define BLOCK_SZ 5
 
 char *strings[12] = {
     "data_unb_var1( %d, 1:3 ) = [ %d %le %le];\n",
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
 
   dtime_best = 0.0;
 
-  FLA_Obj Aobj, Bobj, Cobj, Cold, Cref;
+  FLA_Obj Aobj, Bobj, Cobj, Aold, Bold, Cold, Cref;
 
   /* Initialize FLAME. */
   FLA_Init();
@@ -86,19 +87,22 @@ int main(int argc, char *argv[])
     FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Aobj);
     FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Bobj);
     FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Cobj);
+    FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Aold);
+    FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Bold);
     FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Cold);
     FLA_Obj_create(FLA_DOUBLE, n, n, 1, n, &Cref);
 
     /* Generate random matrix A, and vectors x, and y */
-    FLA_Random_matrix(Aobj);
-    FLA_Random_matrix(Bobj);
+    FLA_Random_matrix(Aold);
+    FLA_Random_matrix(Bold);
     FLA_Random_symm_matrix(FLA_LOWER_TRIANGULAR, Cold);
 
     for (irep = 0; irep < nrepeats; irep++)
     {
       /* Time reference implementation (from libflame) */
       FLA_Copy(Cold, Cref);
-
+      FLA_Copy(Aold, Aobj);
+      FLA_Copy(Bold, Aobj);
       /* start clock */
       dtime = FLA_Clock();
 
@@ -127,13 +131,14 @@ int main(int argc, char *argv[])
       {
         /* Copy vector yold to y */
         FLA_Copy(Cold, Cobj);
+        FLA_Copy(Aold, Aobj);
+        FLA_Copy(Bold, Aobj);
 
         /* start clock */
         dtime = FLA_Clock();
 
         /* Comment out the below call and call your routine instead */
-        //      FLA_Trmm( FLA_LEFT, FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_NONUNIT_DIAG, FLA_ONE, Lobj, Bobj );
-        functions[variant](Aobj, Bobj, Cobj, 2);
+        functions[variant](Aobj, Bobj, Cobj, BLOCK_SZ);
 
         /* stop clock */
         dtime = FLA_Clock() - dtime;
@@ -155,6 +160,8 @@ int main(int argc, char *argv[])
     FLA_Obj_free(&Bobj);
     FLA_Obj_free(&Cobj);
     FLA_Obj_free(&Cref);
+    FLA_Obj_free(&Aold);
+    FLA_Obj_free(&Bold);
     FLA_Obj_free(&Cold);
 
     i++;
