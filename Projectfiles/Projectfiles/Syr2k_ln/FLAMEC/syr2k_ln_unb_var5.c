@@ -9,7 +9,7 @@
 
 #include "FLAME.h"
 
-int Syr2k_unb_var5(FLA_Obj A, FLA_Obj B, FLA_Obj C)
+int syr2k_ln_unb_var5(FLA_Obj A, FLA_Obj B, FLA_Obj C)
 {
     FLA_Obj AT, A0,
         AB, a1t,
@@ -54,10 +54,6 @@ int Syr2k_unb_var5(FLA_Obj A, FLA_Obj B, FLA_Obj C)
                               1, 1, FLA_TL);
 
         /*------------------------------------------------------------*/
-
-        /*                       update line 1                        */
-        /*                             :                              */
-        /*                       update line n                        */
         
         FLA_Gemm(FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, a1t, b1t, FLA_ONE, gamma11);
         FLA_Gemm(FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, b1t, a1t, FLA_ONE, gamma11);

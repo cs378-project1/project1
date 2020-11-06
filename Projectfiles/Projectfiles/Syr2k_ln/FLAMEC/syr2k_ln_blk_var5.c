@@ -9,7 +9,7 @@
 
 #include "FLAME.h"
 
-int Syr2k_blk_var5( FLA_Obj C, FLA_Obj A, FLA_Obj B, int nb_alg )
+int syr2k_ln_blk_var5( FLA_Obj C, FLA_Obj A, FLA_Obj B, int nb_alg )
 {
   FLA_Obj CTL,   CTR,      C00, C01, C02, 
           CBL,   CBR,      C10, C11, C12,
