@@ -296,88 +296,102 @@ How do I decide to partition the matrices in the postcondition?
 	Next, partition the other matrices similarly, but conformally (meaning the 
 	resulting multiplications with the parts are legal).
 \end{itemize}
-Take our problem here:  $ B := L B $.
-Start by partitioning $ L $ in to quadrants:
+Take our problem here:  $ C := A B ^ T + B A ^ T + C $.
+Start by partitioning $ C $ in to quadrants:
 \[
-B = 
 \left(\begin{array}{c I c}
-L_{TL} & 0 \\ \whline
-L_{BL} & L_{BR}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
 \end{array}\right)
-		\widehat B.
+=
+AB^T + BA^T
++
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
+\end{array}\right)
 \]
 Now, the way partitioned matrix multiplication works, this doesn't make sense:
 \[
-B = 
 \begin{array}[t]{c}
 \underbrace{
 \left(\begin{array}{c I c}
-L_{TL} & 0 \\ \whline
-L_{BL} & L_{BR}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
 \end{array}\right)
-		\widehat B.
+=
+AB^T + BA^T
++
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
+\end{array}\right)
 	}\\
-	\left(\begin{array}{c}
-	L_{TL} \times \mbox{something} + 0 \times \mbox{something} \\ \whline
-	L_{BL} \times \mbox{something} + L_{BR} \times \mbox{something}
+	\left(\begin{array}{c I c}
+	C_{TL} + \mbox{something} & * + \mbox{something} \\ \whline
+	C_{BL} + \mbox{something} & C_{BR} + \mbox{something}
 	\end{array}\right)
 	\end{array}.
 \]
-So, we need to also partition $ B $ into a top part and a bottom part:
+So, we need to also partition $ A $ and $ B $ into a top part and a bottom part:
 \[
-\left(\begin{array}{c}
-B_T \\ \whline
-B_B
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
 \end{array}\right)
 = 
 \begin{array}[t]{c}
 \underbrace{
-	\left(\begin{array}{c I c}
-	L_{TL} & 0 \\ \whline
-	L_{BL} & L_{BR}
-	\end{array}\right)
-		\left(\begin{array}{c}
-		\widehat B_T \\ \whline
-		\widehat B_B
-		\end{array}\right).
-	}\\
 	\left(\begin{array}{c}
-	L_{TL} \widehat B_T + 0 \times \widehat B_B\\ \whline
-	L_{BL}  \widehat B_T + L_{BR}  \widehat B_B
-	\end{array}\right)
-	\end{array}
-\]
-
-Alternatively, what if you don't partition $ L $?  You have to partition {\em something} so let's try partitioning $ B $:
-\[
+A_T \\ \whline
+A_B
+\end{array}\right)
+\left(\begin{array}{c I c}
+B_T^T & B_B^T
+\end{array}\right)
++
 \left(\begin{array}{c}
 B_T \\ \whline
 B_B
 \end{array}\right)
-=
-L 
-\left(\begin{array}{c}
-\widehat B_T \\ \whline
-\widehat B_B
-\end{array}\right).
+\left(\begin{array}{c I c}
+A_T^T & A_B^T
+\end{array}\right)
++
+\left(\begin{array}{c I c}
+C_{TL} & * \\ \whline
+C_{BL} & C_{BR}
+\end{array}\right)
+	}\\
+\left(\begin{array}{c I c}
+A_T B_T^T + B_T A_T^T + C_{TL} & * \\ \whline
+A_B B_T^T + B_B A_T^T + C_{BL} & A_B B_B^T + B_B A_B^T + C_{BR}
+\end{array}\right)
+	\end{array}
 \]
-But that doesn't work...
-Instead
+
+Alternatively, what if you don't partition $ C $?  You have to partition {\em something} so let's try partitioning $ A $ and $ B $:
 \[
-\left(\begin{array}{c I c}
-B_L & B_R 
-\end{array}\right)
-=
-L 
-\left(\begin{array}{c I c}
-\widehat B_L & \widehat B_R 
-\end{array}\right)
+C
 =
 \left(\begin{array}{c I c}
-L \widehat B_L & L \widehat B_R 
+A_L & A_R
 \end{array}\right)
+\left(\begin{array}{c}
+B_L^T \\ \whline 
+B_R^T
+\end{array}\right)
++
+\left(\begin{array}{c I c}
+B_L & B_R
+\end{array}\right)
+\left(\begin{array}{c}
+A_L^T \\ \whline 
+A_R^T
+\end{array}\right)
++
+C
 \]
-works just fine.  
 
 \section{Deriving all unblocked algorithms}
 
