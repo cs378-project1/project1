@@ -1,4 +1,4 @@
-\chapter{Example: $ C := A B ^ T + B A ^ T + C $ --  \large Team: --20}
+\chapter{Example: $ C := A B ^ T + B A ^ T + C $ --  \large Team: 20}
 
 
 
@@ -113,7 +113,7 @@ From this, we can choose five loop invariants:
 		\widehat C_{BL} & \widehat C_{BR}
 		\end{array}\right)
 	$. \\
-	(The top left part has been left alone and the bottom parts have been completely computed).
+	(The bottom part has been left alone and the top left parts have been completely computed)
 	\item
 	{\bf Invariant 2:}
 	$
@@ -127,7 +127,7 @@ From this, we can choose five loop invariants:
 			\widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
 			\end{array}\right)
 	$. \\
-	(The bottom right part has been left alone and the left parts have been completely computed).
+	(The left part has been left alone and the bottom right parts have been completely computed).
 	\item
 	{\bf Invariant 3:}
 	$
@@ -141,7 +141,7 @@ From this, we can choose five loop invariants:
 		A_B B_T^T + \widehat C_{BL} & \widehat C_{BR}
 		\end{array}\right)
 	$. \\
-	(The top left part has been left alone, the bottom left part has been partially computed, and the bottom right part has been completely computed).
+	(The bottom right part has been left alone, the bottom left part has been partially computed, and the top left part has been completely computed).
 	\item
 	{\bf Invariant 4:}
 	$
@@ -154,7 +154,7 @@ From this, we can choose five loop invariants:
 			B_B A_T^T + \widehat C_{BL} & \widehat C_{BR}
 			\end{array}\right)
 	$. \\
-	(The top left part has been left alone, the bottom right part has been partially computed, and the bottom left part has been completely computed).
+	(The bottom right part has been left alone, the bottom left part has been partially computed, and the bottom right part has been completely computed).
 	\item
 	{\bf Invariant 5:}
 	$
@@ -167,7 +167,47 @@ From this, we can choose five loop invariants:
 			A_B B_T^T + \widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
 			\end{array}\right)
 	$. \\
-	(The bottom right part has been left alone, the bottom left part has been partially computed, and the top left part has been completely computed).
+	(The top left part has been left alone, the bottom left part has been partially computed, and the bottom right part has been completely computed).
+	\item
+	{\bf Invariant 6:}
+	$
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right) = 
+		\left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			B_B A_T^T + \widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+			\end{array}\right)
+	$. \\
+	(The top left part has been left alone, the bottom left part has been partially computed, and the bottom right part has been completely computed).
+	\item
+	{\bf Invariant 7:}
+	$
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right) = 
+		\left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			A_B B_T^T + B_B A_T^T + \widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+			\end{array}\right)
+	$. \\
+	(The top left part has been left alone, the bottom left part has been completely computed, and the bottom right part has been completely computed).
+	\item
+	{\bf Invariant 8:}
+	$
+	\left(\begin{array}{c I c}
+		C_{TL} & * \\ \whline
+		C_{BL} & C_{BR}
+		\end{array}\right)
+	 = 
+	 \left(\begin{array}{c I c}
+		A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+		A_B B_T^T + B_B A_T^T + \widehat C_{BL} & \widehat C_{BR}
+		\end{array}\right)
+	$. \\
+	(The bottom right part has been left alone, the bottom left part has been completely computed, and the top left part has been completely computed).
 	
 \end{description}
 
@@ -220,12 +260,21 @@ which we refer to as the second PME.
 
 From this, we can choose one more loop invariant:
 \begin{description}
-	\item
-	{\bf Invariant 6:}
-	$
-	C =
-	A_L B_L ^ T + B_L A_L ^ T + \widehat C$.\\
-	 (The right part has been completely finished).
+    \item
+    {\bf Invariant 9:}
+    $
+    C =
+    A_L B_L ^ T + B_L A_L ^ T + \widehat C$.\
+     (The left part has been completely finished and the right part has been left untouched).
+\end{description}
+
+\begin{description}
+    \item
+    {\bf Invariant 10:}
+    $
+    C =
+    A_R B_R ^ T + B_R A_R ^ T + \widehat C$.\
+    (The right part has been completely finished and the left part has been left untouched).
 \end{description}
 
 \subsection{Notes}
@@ -343,86 +392,130 @@ The below table summarizes all loop invariants, with links to all files related 
 		& Invariant & Derivations &Implementations \\ \whline
 		1 & 
 		$
-		\left(\begin{array}{c}
-		B_T \\ \whline
-		B_B
-		\end{array}\right) = 
-		\left(\begin{array}{c}
-		\widehat B_T \\ \whline
-		L_{BR} \widehat B_B
+		\left(\begin{array}{c I c}
+			C_{TL} & * \\ \whline
+			C_{BL} & C_{BR}
+		\end{array}\right)
+		= 
+		\left(\begin{array}{c I c}
+			A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+			\widehat C_{BL} & \widehat C_{BR}
 		\end{array}\right)
 		$
 		&
-		\href{trmm_llnn/Derivations/trmm_llnn_unb_var1.pdf}
+		\href{syr2k_ln/Derivations/syr2k_ln_unb_var1.pdf}
 		{PDF}
 		&
 		\begin{minipage}{0.3\textwidth}
-		\href{trmm_llnn/flameatlab/trmm_llnn_unb_var1.mlx}
-		{trmm\_llnn\_unb\_var1.mlx}\\
-		\href{trmm_llnn/FLAMEC/trmm_llnn_unb_var1.c}
-		{trmm\_llnn\_unb\_var1.c}
+		\href{syr2k_ln/flameatlab/syr_2k_unb_var1.mlx}
+		{syr2k\_ln\_unb\_var1.mlx}\\
+		\href{syr2k_ln/FLAMEC/syr_2k_unb_var1.c}
+		{syr2k\_ln\_unb\_var1.c}
 	    \end{minipage}
 	    \\ \hline
 	    2 & 
 	    $
-	    \left(\begin{array}{c}
-	    B_T \\ \whline
-	    B_B
-	    \end{array}\right) = 
-	    \left(\begin{array}{c}
-	    \widehat B_T \\ \whline
-	    L_{BL} B_T + L_{BR} \widehat B_B
-	    \end{array}\right)
+	   \left(\begin{array}{c I c}
+	   	C_{TL} & * \\ \whline
+	   	C_{BL} & C_{BR}
+	   \end{array}\right)
+	   = 
+	   \left(\begin{array}{c I c}
+	   	\widehat C_{TL} & * \\ \whline
+	   	\widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+	   \end{array}\right)
 	    $
 	    &
-	    \href{trmm_llnn/Derivations/trmm_llnn_unb_var2.pdf}
+	    \href{Syr2k_ln/Derivations/syr2k_ln_unb_var2.pdf}
 	    {PDF}
 	    &
 	    \begin{minipage}{0.3\textwidth}
-	    	\href{trmm_llnn/flameatlab/trmm_llnn_unb_var2.mlx}
-	    	{trmm\_llnn\_unb\_var2.mlx}\\
-	    	\href{trmm_llnn/FLAMEC/trmm_llnn_unb_var2.c}
-	    	{trmm\_llnn\_unb\_var2.c}
+    	\href{syr2k_ln/flameatlab/syr_2k_unb_var2.mlx}
+    	{syr2k\_ln\_unb\_var2.mlx}\\
+    	\href{syr2k_ln/FLAMEC/syr_2k_unb_var2.c}
+    	{syr2k\_ln\_unb\_var2.c}
 	    \end{minipage}
 	    \\ \hline
 	    3 & 
 	    $
-	    \left( \begin{array}{c I c}
-	    B_L & B_R
-	    \end{array}\right) = 
-	    \left( \begin{array}{c I c}
-	    L \widehat B_L & \widehat B_R
+	    \left(\begin{array}{c I c}
+	    	C_{TL} & * \\ \whline
+	    	C_{BL} & C_{BR}
+	    \end{array}\right)
+	    = 
+	    \left(\begin{array}{c I c}
+	    	A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+	    	A_B B_T^T + \widehat C_{BL} & \widehat C_{BR}
 	    \end{array}\right)
 	    $
 	    &
-	    \href{trmm_llnn/Derivations/trmm_llnn_unb_var3.pdf}
+	    \href{Syr2k_ln/Derivations/syr2k_ln_unb_var3.pdf}
 	    {PDF}
 	    &
 	    \begin{minipage}{0.3\textwidth}
-	    	\href{trmm_llnn/flameatlab/trmm_llnn_unb_var3.mlx}
-	    	{trmm\_llnn\_unb\_var3.mlx}\\
-	    	\href{trmm_llnn/FLAMEC/trmm_llnn_unb_var3.c}
-	    	{trmm\_llnn\_unb\_var3.c}
+    	\href{syr2k_ln/flameatlab/syr_2k_unb_var3.mlx}
+    	{syr2k\_ln\_unb\_var3.mlx}\\
+    	\href{syr2k_ln/FLAMEC/syr_2k_unb_var3.c}
+    	{syr2k\_ln\_unb\_var3.c}
 	    \end{minipage}
 	    \\ \hline
 	    4 & 
 	    $
-	    \left( \begin{array}{c I c}
-	    B_L & B_R
+	    \left(\begin{array}{c I c}
+	    	C_{TL} & * \\ \whline
+	    	C_{BL} & C_{BR}
 	    \end{array}\right) = 
-	    \left( \begin{array}{c I c}
-	    \widehat B_L & L \widehat B_R
+	    \left(\begin{array}{c I c}
+	    	A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+	    	B_B A_T^T + \widehat C_{BL} & \widehat C_{BR}
 	    \end{array}\right)
 	    $
 	    &
-	    \href{trmm_llnn/Derivations/trmm_llnn_unb_var4.pdf}
+	    \href{Syr2k_ln/Derivations/syr2k_ln_unb_var4.pdf}
 	    {PDF}
 	    &
 	    \begin{minipage}{0.3\textwidth}
-	    	\href{trmm_llnn/flameatlab/trmm_llnn_unb_var4.mlx}
-	    	{trmm\_llnn\_unb\_var4.mlx}\\
-	    	\href{trmm_llnn/FLAMEC/trmm_llnn_unb_var4.c}
-	    	{trmm\_llnn\_unb\_var4.c}
+    	\href{syr2k_ln/flameatlab/syr_2k_unb_var4.mlx}
+    	{syr2k\_ln\_unb\_var4.mlx}\\
+    	\href{syr2k_ln/FLAMEC/syr_2k_unb_var4.c}
+    	{syr2k\_ln\_unb\_var4.c}
+	    \end{minipage}
+	    \\ \hline
+	    5 & 
+	    $
+	    \left(\begin{array}{c I c}
+	    	C_{TL} & * \\ \whline
+	    	C_{BL} & C_{BR}
+	    \end{array}\right) = 
+	    \left(\begin{array}{c I c}
+	    	\widehat C_{TL} & * \\ \whline
+	    	A_B B_T^T + \widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+	    \end{array}\right)
+	    $
+	    &
+	    \href{syr2k_ln/Derivations/syr2k_ln_unb_var5.pdf}
+	    {PDF}
+	    &
+	    \begin{minipage}{0.3\textwidth}
+    	\href{syr2k_ln/flameatlab/syr_2k_unb_var5.mlx}
+    	{syr2k\_ln\_unb\_var5.mlx}\\
+    	\href{syr2k_ln/FLAMEC/syr_2k_unb_var5.c}
+    	{syr2k\_ln\_unb\_var5.c}
+	    \end{minipage}
+	    \\ \hline
+	    9 & 
+	    $
+	    C = A_L B_L ^ T + B_L A_L ^ T + \widehat C
+	    $
+	    &
+	    \href{syr2k_ln/Derivations/syr2k_ln_unb_var9.pdf}
+	    {PDF}
+	    &
+	    \begin{minipage}{0.3\textwidth}
+    	\href{syr2k_ln/flameatlab/syr_2k_unb_var9.mlx}
+    	{syr2k\_ln\_unb\_var9.mlx}\\
+    	\href{syr2k_ln/FLAMEC/syr_2k_unb_var9.c}
+    	{syr2k\_ln\_unb\_var9.c}
 	    \end{minipage}
 	    \\ \hline
 	\end{tabular}
@@ -441,86 +534,130 @@ the \href{http://edx-org-utaustinx.s3.amazonaws.com/UT1401x/LAFFPfC/Spark/index.
 		& Invariant & Derivations &Implementations \\ \whline
 		1 & 
 		$
-		\left(\begin{array}{c}
-		B_T \\ \whline
-		B_B
-		\end{array}\right) = 
-		\left(\begin{array}{c}
-		\widehat B_T \\ \whline
-		L_{BR} \widehat B_B
+		\left(\begin{array}{c I c}
+			C_{TL} & * \\ \whline
+			C_{BL} & C_{BR}
+		\end{array}\right)
+		= 
+		\left(\begin{array}{c I c}
+			A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+			\widehat C_{BL} & \widehat C_{BR}
 		\end{array}\right)
 		$
 		&
-		\href{trmm_llnn/Derivations/trmm_llnn_blk_var1.pdf}
+		\href{syr2k_ln/Derivations/syr2k_ln_blk_var1.pdf}
 		{PDF}
 		&
 		\begin{minipage}{0.3\textwidth}
-			\href{trmm_llnn/flameatlab/trmm_llnn_blk_var1.mlx}
-			{trmm\_llnn\_blk\_var1.mlx}\\
-			\href{trmm_llnn/FLAMEC/trmm_llnn_blk_var1.c}
-			{trmm\_llnn\_blk\_var1.c}
+			\href{syr2k_ln/flameatlab/syr_2k_blk_var1.mlx}
+			{syr2k\_ln\_blk\_var1.mlx}\\
+			\href{syr2k_ln/FLAMEC/syr_2k_blk_var1.c}
+			{syr2k\_ln\_blk\_var1.c}
 		\end{minipage}
 		\\ \hline
 		2 & 
 		$
-		\left(\begin{array}{c}
-		B_T \\ \whline
-		B_B
-		\end{array}\right) = 
-		\left(\begin{array}{c}
-		\widehat B_T \\ \whline
-		L_{BL} B_T + L_{BR} \widehat B_B
+		\left(\begin{array}{c I c}
+			C_{TL} & * \\ \whline
+			C_{BL} & C_{BR}
+		\end{array}\right)
+		= 
+		\left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			\widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
 		\end{array}\right)
 		$
 		&
-		\href{trmm_llnn/Derivations/trmm_llnn_blk_var2.pdf}
+		\href{syr2k_ln/Derivations/syr2k_ln_blk_var2.pdf}
 		{PDF}
 		&
 		\begin{minipage}{0.3\textwidth}
-			\href{trmm_llnn/flameatlab/trmm_llnn_blk_var2.mlx}
-			{trmm\_llnn\_blk\_var2.mlx}\\
-			\href{trmm_llnn/FLAMEC/trmm_llnn_blk_var2.c}
-			{trmm\_llnn\_blk\_var2.c}
+			\href{syr2k_ln/flameatlab/syr_2k_blk_var2.mlx}
+			{syr2k\_ln\_blk\_var2.mlx}\\
+			\href{syr2k_ln/FLAMEC/syr_2k_blk_var2.c}
+			{syr2k\_ln\_blk\_var2.c}
 		\end{minipage}
 		\\ \hline
 		3 & 
 		$
-		\left( \begin{array}{c I c}
-		B_L & B_R
-		\end{array}\right) = 
-		\left( \begin{array}{c I c}
-		L \widehat B_L & \widehat B_R
+		\left(\begin{array}{c I c}
+			C_{TL} & * \\ \whline
+			C_{BL} & C_{BR}
+		\end{array}\right)
+		= 
+		\left(\begin{array}{c I c}
+			A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+			A_B B_T^T + \widehat C_{BL} & \widehat C_{BR}
 		\end{array}\right)
 		$
 		&
-		\href{trmm_llnn/Derivations/trmm_llnn_blk_var3.pdf}
+		\href{syr2k_ln/Derivations/syr2k_ln_blk_var3.pdf}
 		{PDF}
 		&
 		\begin{minipage}{0.3\textwidth}
-			\href{trmm_llnn/flameatlab/trmm_llnn_blk_var3.mlx}
-			{trmm\_llnn\_blk\_var3.mlx}\\
-			\href{trmm_llnn/FLAMEC/trmm_llnn_blk_var3.c}
-			{trmm\_llnn\_blk\_var3.c}
+			\href{syr2k_ln/flameatlab/syr_2k_blk_var3.mlx}
+			{syr2k\_ln\_blk\_var3.mlx}\\
+			\href{syr2k_ln/FLAMEC/syr_2k_blk_var3.c}
+			{syr2k\_ln\_blk\_var3.c}
 		\end{minipage}
 		\\ \hline
 		4 & 
 		$
-		\left( \begin{array}{c I c}
-		B_L & B_R
+		\left(\begin{array}{c I c}
+			C_{TL} & * \\ \whline
+			C_{BL} & C_{BR}
 		\end{array}\right) = 
-		\left( \begin{array}{c I c}
-		\widehat B_L & L \widehat B_R
+		\left(\begin{array}{c I c}
+			A_T B_T^T + B_T A_T^T + \widehat C_{TL} & * \\ \whline
+			B_B A_T^T + \widehat C_{BL} & \widehat C_{BR}
 		\end{array}\right)
 		$
 		&
-		\href{trmm_llnn/Derivations/trmm_llnn_blk_var4.pdf}
+		\href{syr2k_ln/Derivations/syr2k_ln_blk_var4.pdf}
 		{PDF}
 		&
 		\begin{minipage}{0.3\textwidth}
-			\href{trmm_llnn/flameatlab/trmm_llnn_blk_var4.mlx}
-			{trmm\_llnn\_blk\_var4.mlx}\\
-			\href{trmm_llnn/FLAMEC/trmm_llnn_blk_var4.c}
-			{trmm\_llnn\_blk\_var4.c}
+			\href{syr2k_ln/flameatlab/syr_2k_blk_var4.mlx}
+			{syr2k\_ln\_blk\_var4.mlx}\\
+			\href{syr2k_ln/FLAMEC/syr_2k_blk_var4.c}
+			{syr2k\_ln\_blk\_var4.c}
+		\end{minipage}
+		\\ \hline
+		5 & 
+		$
+		\left(\begin{array}{c I c}
+			C_{TL} & * \\ \whline
+			C_{BL} & C_{BR}
+		\end{array}\right) = 
+		\left(\begin{array}{c I c}
+			\widehat C_{TL} & * \\ \whline
+			A_B B_T^T + \widehat C_{BL} & A_B B_B^T + B_B A_B^T + \widehat C_{BR}
+		\end{array}\right)
+		$
+		&
+		\href{syr2k_ln/Derivations/syr2k_ln_blk_var5.pdf}
+		{PDF}
+		&
+		\begin{minipage}{0.3\textwidth}
+			\href{syr2k_ln/flameatlab/syr_2k_blk_var5.mlx}
+			{syr2k\_ln\_blk\_var5.mlx}\\
+			\href{syr2k_ln/FLAMEC/syr_2k_blk_var5.c}
+			{syr2k\_ln\_blk\_var5.c}
+		\end{minipage}
+		\\ \hline
+		9 & 
+		$
+		C = A_L B_L ^ T + B_L A_L ^ T + \widehat C
+		$
+		&
+		\href{syr2k_ln/Derivations/syr2k_ln_blk_var9.pdf}
+		{PDF}
+		&
+		\begin{minipage}{0.3\textwidth}
+			\href{syr2k_ln/flameatlab/syr_2k_blk_var9.mlx}
+			{syr2k\_ln\_blk\_var9.mlx}\\
+			\href{syr2k_ln/FLAMEC/syr_2k_blk_var9.c}
+			{syr2k\_ln\_blk\_var9.c}
 		\end{minipage}
 		\\ \hline
 	\end{tabular}
