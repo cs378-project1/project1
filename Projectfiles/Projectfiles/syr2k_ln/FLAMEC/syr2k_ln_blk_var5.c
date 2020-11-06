@@ -9,7 +9,7 @@
 
 #include "FLAME.h"
 
-int syr2k_ln_blk_var5( FLA_Obj C, FLA_Obj A, FLA_Obj B, int nb_alg )
+int syr2k_ln_blk_var5( FLA_Obj A, FLA_Obj B, FLA_Obj C, int nb_alg )
 {
   FLA_Obj CTL,   CTR,      C00, C01, C02, 
           CBL,   CBR,      C10, C11, C12,
@@ -56,12 +56,9 @@ int syr2k_ln_blk_var5( FLA_Obj C, FLA_Obj A, FLA_Obj B, int nb_alg )
 
     /*------------------------------------------------------------*/
 
-    /*                       update line 1                        */
-    /*                             :                              */
-    /*                       update line n                        */
-
-    FLA_Gemm(FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, A1, B1, FLA_ONE, C11);
-    FLA_Gemm(FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, B1, A1, FLA_ONE, C11);
+    /* C11 := A1B1^T + B1A1^T + C11 */
+      FLA_Syr2k(FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_ONE, A1, B1, FLA_ONE, C11);
+      
 
     FLA_Gemm(FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, A1, B0, FLA_ONE, C10);
     FLA_Gemm(FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, B2, A1, FLA_ONE, C21);
