@@ -30,8 +30,7 @@ int syr2k_ln_unb_var9( FLA_Obj A, FLA_Obj B, FLA_Obj C )
     /*------------------------------------------------------------*/
 
     /* C := a1 * b1' + b1 * a1' + C */
-    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, a1, b1, FLA_ONE, C );
-    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, b1, a1, FLA_ONE, C );
+    FLA_Syr2(FLA_LOWER_TRIANGULAR, FLA_ONE, a1, b1, C);
 
     /*------------------------------------------------------------*/
 

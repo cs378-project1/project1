@@ -34,8 +34,7 @@ int syr2k_ln_blk_var9( FLA_Obj A, FLA_Obj B, FLA_Obj C, int nb_alg )
     /*------------------------------------------------------------*/
 
     /* C := A1 * B1' + B1 * A1' + C */
-    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, A1, B1, FLA_ONE, C );
-    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, FLA_ONE, B1, A1, FLA_ONE, C );
+    FLA_Syr2k(FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, FLA_ONE, A1, B1, FLA_ONE, C);
 
     /*------------------------------------------------------------*/
 
