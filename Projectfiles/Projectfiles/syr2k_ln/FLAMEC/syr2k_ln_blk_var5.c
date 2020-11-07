@@ -3,8 +3,8 @@
    For licensing information see
                   http://www.cs.utexas.edu/users/flame/license.html 
 
-   Programmed by: Name of author
-                  Email of author
+   Programmed by: Michael Yang
+                  michael.yangdh@utexas.edu
                                                                      */
 
 #include "FLAME.h"

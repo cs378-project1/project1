@@ -1,5 +1,14 @@
 #include "FLAME.h"
 
+/* Copyright 2020 The University of Texas at Austin
+ 
+   For licensing information see
+                  http://www.cs.utexas.edu/users/flame/license.html
+
+   Programmed by: Byungik Hyun
+                  quddlr9015@naver.com
+                                                                     */
+
 int syr2k_ln_unb_var3( FLA_Obj A, FLA_Obj B, FLA_Obj C )
 {
   FLA_Obj AT,              A0,

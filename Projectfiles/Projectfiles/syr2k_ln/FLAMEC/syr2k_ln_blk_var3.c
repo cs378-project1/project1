@@ -3,8 +3,8 @@
    For licensing information see
                   http://www.cs.utexas.edu/users/flame/license.html
 
-   Programmed by: Daimu Iwata
-                  di2937@utexas.edu
+   Programmed by: Byungik Hyun
+                  quddlr9015@naver.com
                                                                      */
 
 #include "FLAME.h"
