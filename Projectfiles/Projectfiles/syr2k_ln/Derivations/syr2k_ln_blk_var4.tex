@@ -210,15 +210,15 @@
 % Step 6: State after repartitioning
 
 \renewcommand{\beforeupdate}{
-	$  \left(\begin{array}{c I c c}
-	{C_{00}} & * & * \\ \whline
+	$  \left(\begin{array}{c c c}
+	{C_{00}} & * & * \\
 	{C_{10}} & {C_{11}} & * \\ 
 	{C_{20}} & {C_{21}} & {C_{22}}
 	\end{array}\right) =
-	\left(\begin{array}{c I c c}
+	\left(\begin{array}{c c c}
 	{A_{0}} {B_{0}^T} + {B_{0}} {A_{0}^T} + \widehat{C}_{00} & 
 	* & 
-	* \\ \whline
+	* \\ 
 	{B_{1}} {A_{0}^T} + \widehat{C}_{10}& 
 	{C}_{11} &
 	* \\ 
@@ -233,18 +233,18 @@
 % Step 7: State after moving of double lines
 
 \renewcommand{\afterupdate}{
-	$   \left(\begin{array}{c c I c}
+	$   \left(\begin{array}{c c c}
 	{C_{00}} & * & * \\ 
-	{C_{10}} & {C_{11}} & * \\ \whline
+	{C_{10}} & {C_{11}} & * \\
 	{C_{20}} & {C_{21}} & {C_{22}}
 	\end{array}\right) = 
-	\left(\begin{array}{c c I c}
+	\left(\begin{array}{c c c}
 	{A_{0}} {B_{0}^T} + {B_{0}} {A_{0}^T} + \widehat{C}_{00} & 
 	* & 
 	* \\ 
 	{A_{1}} {B_{0}^T} + {B_{1}} {A_{0}^T} + \widehat{C}_{10}& 
 	{A_{1}} {B_{1}^T} + {B_{1}} {A_{1}^T} + \widehat{C}_{11} &
-	* \\ \whline
+	* \\ 
 	{B_{2}} {A_{0}^T} + \widehat{C}_{20} &
 	{B_{2}} {A_{1}^T} + \widehat{C}_{21} & 
 	{C}_{22}

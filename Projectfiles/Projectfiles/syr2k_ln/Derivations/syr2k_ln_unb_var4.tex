@@ -213,16 +213,16 @@
 
 \renewcommand{\beforeupdate}{
 	$  
-	\left(\begin{array}{c I c c}
-	{C_{00}} & * & * \\ \whline
+	\left(\begin{array}{c c c}
+	{C_{00}} & * & * \\
 	{c_{10}^T} & {\gamma_{11}} & * \\ 
 	{C_{20}} & {c_{21}} & {C_{22}}
 	\end{array}\right)
 	=
-	\left(\begin{array}{c I c c}
+	\left(\begin{array}{c c c}
 	{A_{0}} {B_{0}^T} + {B_{0}} {A_{0}^T} + \widehat{C}_{00} & 
 	* & 
-	* \\ \whline
+	* \\ 
 	{b_{1}^T} {A_{0}^T} + \widehat{c}^T_{10}& 
 	{\gamma}_{11} &
 	* \\ 
@@ -237,19 +237,19 @@
 % Step 7: State after moving of double lines
 
 \renewcommand{\afterupdate}{
-	$  \left(\begin{array}{c c I c}
+	$  \left(\begin{array}{c c c}
 	{C_{00}} & * & * \\
-	{c_{10}^T} & {\gamma_{11}} & * \\ \whline
+	{c_{10}^T} & {\gamma_{11}} & * \\ 
 	{C_{20}} & {c_{21}} & {C_{22}}
 	\end{array}\right) 
 	= 
-	\left(\begin{array}{c c I c}
+	\left(\begin{array}{c c c}
 	{A_{0}} {B_{0}^T} + {B_{0}} {A_{0}^T} + \widehat{C}_{00} & 
 	* & 
 	* \\ 
 	{a_{1}^T} {B_{0}^T} + {b_{1}^T} {A_{0}^T} + \widehat{c}^T_{10}& 
 	{a_{1}^T} {b_{1}} + {b_{1}^T} {a_{1}} + \widehat{\gamma}_{11} &
-	* \\ \whline
+	* \\ 
 	{B_{2}} {A_{0}^T} + \widehat{C}_{20} &
 	{B_{2}} {a_{1}} + \widehat{c}_{21} & 
 	{C}_{22}
