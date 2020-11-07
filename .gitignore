@@ -284,3 +284,5 @@ TSWLatexianTemp*
 #*Notes.bib
 
 **/*.o
+
+*.mtc

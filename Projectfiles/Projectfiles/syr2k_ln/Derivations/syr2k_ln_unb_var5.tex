@@ -122,7 +122,7 @@ B_B
 	\rightarrow
 	\left(\begin{array}{c c I c}
 	C_{00} & * & * \\  
-	c_{10}^T & \lambda_{11} & * \\ \whline 
+	c_{10}^T & \gamma_{11} & * \\ \whline 
 	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	$
@@ -153,7 +153,7 @@ B_B
 }
 
 \renewcommand{\repartitionsizes}{
-	$ \lambda_{11} $ is $ 1 \times 1 $,
+	$ \gamma_{11} $ is $ 1 \times 1 $,
 	$ a_1 $ and $ b_1 $ have $ 1 $ row}
 
 % Step 5b: Move the double lines 
@@ -166,7 +166,7 @@ B_B
 	\leftarrow
 	\left(\begin{array}{c I c c}
 	C_{00} & * & * \\ \whline 
-	c_{10}^T & \lambda_{11} & * \\  
+	c_{10}^T & \gamma_{11} & * \\  
 	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	$
@@ -202,13 +202,13 @@ B_B
 \renewcommand{\beforeupdate}{$ 
 	\left(\begin{array}{c c c}
 	C_{00} & * & * \\  
-	c_{10}^T & \lambda_{11} & * \\ 
+	c_{10}^T & \gamma_{11} & * \\ 
 	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	=
 	\left(\begin{array}{c c c}
 	C_{00} & * & * \\  
-	c_{10}^T & \lambda_{11} & * \\ 
+	c_{10}^T & \gamma_{11} & * \\ 
 	A_2 B_0^T + \widehat C_{20} & A_2 b_1 + \widehat c_{21} & A_2 B_2^T + B_2 A_2^T + \widehat C_{22}
 	\end{array}\right) 
 $}
@@ -220,13 +220,13 @@ $}
 \renewcommand{\afterupdate}{$ 
 	\left(\begin{array}{c c c}
 	C_{00} & * & * \\  
-	c_{10}^T & \lambda_{11} & * \\ 
+	c_{10}^T & \gamma_{11} & * \\ 
 	C_{20} & c_{21} & C_{22}
 	\end{array}\right) 
 	=
 	\left(\begin{array}{c c c}
 	C_{00} & * & * \\  
-	a_1^T B_0^T + \widehat c_{10}^T & a_1^T b_1 + b_1^T a_1 + \widehat \lambda_{11} & * \\
+	a_1^T B_0^T + \widehat c_{10}^T & a_1^T b_1 + b_1^T a_1 + \widehat \gamma_{11} & * \\
 	A_2 B_0^T +  \widehat C_{20} & A_2 b_1 + B_2 a_1 + \widehat c_{21} & A_2 B_2^T + B_2 A_2^T + \widehat C_{22}
 	\end{array}\right) 
 	$}
@@ -239,7 +239,7 @@ $}
 \renewcommand{\update}{
 	$
 	\begin{array}{l}          % do not delete this line 
-	\lambda_{11} := a_1^T b_1 + b_1^T a_1 + \lambda_{11} \\
+	\gamma_{11} := a_1^T b_1 + b_1^T a_1 + \gamma_{11} \\
 	c_{10}^T := a_1^T B_0^T + c_{10}^T \\
 	c_{21} := B_2 a_1 + c_{21} 
 	\end{array}               % do not delete this line 
